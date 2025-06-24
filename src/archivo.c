@@ -23,3 +23,7 @@ FILE *crear_archivo_binario(CLI_Arguments cli_arg){
         return archivo_binario;
     }
 }
+
+FILE *generar_binario(Archivos lista_archivos){
+
+}

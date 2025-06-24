@@ -31,14 +31,16 @@ int main(int argc, char *argv[]){
         return code_error(archivo_binario_no_creado, cli_arg);
     }
 
-    //cerramos los archivos temporalmente
+
+    Instrucciones lista_instrucciones = extraer_instrucciones(lista_archivos.archivo_fuente);
+
+
+
+
     fclose(lista_archivos.archivo_fuente);
     fclose(lista_archivos.archivo_binario);
 
-    //1- leer archivo fuente
-    //2- extraer primera linea de l texto
-    //3- procesarla para separar instruccion y operando
-    //4- agregar intruccion a la lista de instrucciones
+
 
 
 

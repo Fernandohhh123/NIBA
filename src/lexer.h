@@ -10,7 +10,8 @@ typedef struct nodo{
 }Instrucciones;
 
 
-Instrucciones extraer_instruccion(Instrucciones lista_instrucciones, Archivos lista_archivos);
+Instrucciones extraer_instrucciones(FILE *archivo_fuente);
 
+void agregar_instruccion_a_lista();
 
 #endif
