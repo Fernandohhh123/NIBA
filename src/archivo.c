@@ -15,27 +15,11 @@ FILE *buscarArchivo(CLI_Arguments cli_arg){
     }
 }
 
-
-
-FILE *generar_archivo_binario(FILE *archivo_fuente){
-     FILE *archivo_binario = crear_archivo_binario(archivo);
-
-     return archivo_binario;
-}
-
-
-
-FILE *crear_archivo_binario(FILE *archivo){
-    //creamos un archivo binario
-    FILE *archivo_binario = fopen(archivo, open_type_binary_write);
-
+FILE *crear_archivo_binario(CLI_Arguments cli_arg){
+    FILE *archivo_binario = fopen(cli_arg.archivo_salida, open_type_binary_write);
     if(!archivo_binario){
-        printf("Algo ha fallado al crear el archivo binario\n");
-        exit(2);
+        return NULL;
+    } else{
+        return archivo_binario;
     }
-    return archivo_binario;
-}
-
-void leer_archivo_fuente(CLI_Arguments cli_arg){
-
 }

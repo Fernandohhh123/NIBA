@@ -3,13 +3,17 @@
 
 #include <stdio.h>
 #include "cli.h"
+#include "archivo.h"
+
+typedef struct {
+    FILE *archivo_fuente;
+    FILE *archivo_binario;
+}Archivos;
 
 FILE *buscarArchivo(CLI_Arguments cli_arg);
 
-FILE *generar_archivo_binario(FILE *archivo);
+FILE *crear_archivo_binario(CLI_Arguments cli_arg);
 
-FILE *crear_archivo_binario(FILE *archivo);
-
-void leer_archivo_fuente(CLI_Arguments cli_arg);
+FILE *generar_binario();
 
 #endif

@@ -3,6 +3,7 @@
 #include "cli.h"
 
 #define archivo_fuente_no_encontrado 1
+#define archivo_binario_no_creado 2
 
 int code_error(int error_code, CLI_Arguments cli_arg);
 

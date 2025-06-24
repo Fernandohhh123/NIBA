@@ -1,0 +1,3 @@
+LDA, 5
+ADD, 2
+OUTB
