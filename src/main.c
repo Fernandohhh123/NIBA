@@ -4,6 +4,7 @@
 #include "cli.h"
 #include "error.h"
 #include "lexer.h"
+#include "lista.h"
 
 
 int main(int argc, char *argv[]){
@@ -32,7 +33,8 @@ int main(int argc, char *argv[]){
     }
 
 
-    Instrucciones lista_instrucciones = extraer_instrucciones(lista_archivos.archivo_fuente);
+    //estructura para guardar las instruccones
+    Instrucciones *lista_instrucciones = extraer_instrucciones(lista_archivos.archivo_fuente);
 
 
 
@@ -40,9 +42,10 @@ int main(int argc, char *argv[]){
     fclose(lista_archivos.archivo_fuente);
     fclose(lista_archivos.archivo_binario);
 
+    //mostrar_lista(lista_instrucciones);
 
 
-
+    //liberar_lista(lista_instrucciones);
 
 
     return 0;

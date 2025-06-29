@@ -1,17 +1,15 @@
 #ifndef LEXER_H
 #define LEXER_H
+
 #include "archivo.h"
+#include "lista.h"
 
-typedef struct nodo{
-    const char instruccion;
-    int operando;
-    int linea_original; //ubicacion en el codigo fuente
-    int *siguiente;
-}Instrucciones;
+Instrucciones *extraer_instrucciones(FILE *archivo_fuente);
 
+void extraer_nemonico(Inst_aux **instrucciones_auxiliar, char *linea);
 
-Instrucciones extraer_instrucciones(FILE *archivo_fuente);
+void extraer_operando(Inst_aux **instrucciones_auxiliar, char *linea);
 
-void agregar_instruccion_a_lista();
+void agregar_instruccion_lista(Instrucciones **lista_instrucciones, Inst_aux **instrucciones_auxiliar);
 
 #endif
