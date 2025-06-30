@@ -1,4 +1,5 @@
 #include <stdio.h>
+<<<<<<< HEAD
 #include <stdlib.h>
 #include "lista.h"
 
@@ -20,4 +21,10 @@ void mostrar_lista(Instrucciones *lista){
 
         lista = lista->siguiente;
     }
+=======
+#include "lista.h"
+
+void liberar_lista(){
+
+>>>>>>> version-funcional
 }

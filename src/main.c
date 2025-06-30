@@ -34,9 +34,13 @@ int main(int argc, char *argv[]){
     }
 
 
+<<<<<<< HEAD
     //estructura para guardar las instruccones
     Instrucciones *lista_instrucciones = malloc(sizeof(Instrucciones));
     extraer_instrucciones(lista_archivos.archivo_fuente);
+=======
+    Instrucciones *lista_instrucciones = extraer_instrucciones(lista_archivos.archivo_fuente);
+>>>>>>> version-funcional
 
 
 

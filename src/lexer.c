@@ -2,19 +2,24 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <string.h>
 #include "lexer.h"
 #include "info.h"
 #include "lista.h"
 
+<<<<<<< HEAD
 #define MAX_LINEA 128
 
 
+=======
+>>>>>>> version-funcional
 Instrucciones *extraer_instrucciones(FILE *archivo_fuente){
     //se crea una lista elazada para guardar las instrucciones
     //2- se lee el archivo fuente
     //3- cada linea extraida es dividida entre instruccion y operando, en caso de tenrlo
     // "LDA, 5" -> "LDA" - "," - "espacio" - "5" - "\n" -> "LDA" "5"
 
+<<<<<<< HEAD
     //creamos una lista para guardar las instrucciones
     Instrucciones *lista_instrucciones = malloc(sizeof(Instrucciones));
 
@@ -24,6 +29,23 @@ Instrucciones *extraer_instrucciones(FILE *archivo_fuente){
 
     //extraemos linea por linea y la procesamos
     char linea[MAX_LINEA]; //aqio se guarda la linea comleta
+=======
+    Instrucciones *lista_instrucciones = malloc(sizeof(Instrucciones));
+    if(lista_instrucciones == NULL){
+        printf("No se pudo crear la lista de instrucciones en lexer\n");
+        exit(1);
+    }
+
+    Inst_aux *instrucciones_auxiliar = malloc(sizeof(Inst_aux));
+    if(instrucciones_auxiliar == NULL){
+        printf("No se pudo crear la estructura auxiliar\n");
+        exit(1);
+    }
+
+    instrucciones_auxiliar->operando = 0;
+
+    char linea[MAX_LINEA];
+>>>>>>> version-funcional
     while(fgets(linea, sizeof(linea), archivo_fuente)){
         //printf("%s", linea);
 
@@ -33,6 +55,7 @@ Instrucciones *extraer_instrucciones(FILE *archivo_fuente){
         //extraemos los numeros/operandos
         extraer_operando(&instrucciones_auxiliar, linea);
 
+<<<<<<< HEAD
         //agregamos la estructura a la lista
         agregar_instruccion_lista(&lista_instrucciones, &instrucciones_auxiliar);
 
@@ -42,10 +65,20 @@ Instrucciones *extraer_instrucciones(FILE *archivo_fuente){
     //printf("Operando: %d\n", lista_instrucciones->operando);
 
     //retornamos el primer elmento de la lista
+=======
+        printf("entrando a agregar_instruccion_lista\n");
+        //agregamos la estructura a la lista
+        agregar_instruccion_lista(&lista_instrucciones, &instrucciones_auxiliar);
+    }
+
+
+    free(instrucciones_auxiliar);
+>>>>>>> version-funcional
     return lista_instrucciones;
 }
 
 
+<<<<<<< HEAD
 
 
 
@@ -74,6 +107,23 @@ void extraer_nemonico(Inst_aux **instrucciones_auxiliar, char *linea){
 //Aun que en el codigo no necesite operando, en la rom habra espacio para un operando
 // sin importar la instruccion, pero el procesador ignorará ese operando
 #define OPERANDO_DEFAULT 0
+=======
+void extraer_nemonico(Inst_aux **instrucciones_auxiliar, char *linea){
+    int i = 0;
+    char instruccion[MAX_NEMONICO] = {0};
+    while(linea[i] != '\0' && linea[i] != ',' && linea[i] != ' '){
+        instruccion[i] = linea[i];
+        i++;
+    }
+
+    instruccion[i] = '\0';
+
+    strcpy((*instrucciones_auxiliar)->nemonico,instruccion);
+}
+
+
+
+>>>>>>> version-funcional
 
 void extraer_operando(Inst_aux **instrucciones_auxiliar, char *linea){
 
@@ -106,12 +156,21 @@ void extraer_operando(Inst_aux **instrucciones_auxiliar, char *linea){
     }
 }
 
+<<<<<<< HEAD
 
 void agregar_instruccion_lista(Instrucciones **lista_instrucciones, Inst_aux **instrucciones_auxiliar){
     Instrucciones *nuevo_nodo = malloc(sizeof(Instrucciones));
     if(!nuevo_nodo) return;
 
     nuevo_nodo = NULL;
+=======
+void agregar_instruccion_lista(Instrucciones **lista_instrucciones, Inst_aux **instrucciones_auxiliar){
+
+    Instrucciones *nuevo_nodo = malloc(sizeof(Instrucciones));
+    if(!nuevo_nodo) return;
+
+    nuevo_nodo->siguiente = NULL;
+>>>>>>> version-funcional
 
     strcpy(nuevo_nodo->nemonico, (*instrucciones_auxiliar)->nemonico);
     nuevo_nodo->operando = (*instrucciones_auxiliar)->operando;
