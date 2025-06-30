@@ -11,8 +11,8 @@ Instrucciones *extraer_instrucciones(FILE *archivo_fuente){
     //3- cada linea extraida es dividida entre instruccion y operando, en caso de tenrlo
     // "LDA, 5" -> "LDA" - "," - "espacio" - "5" - "\n" -> "LDA" "5"
 
-    Instrucciones *lista_instrucciones;
-    if(instrucciones_auxiliar == NULL){
+    Instrucciones *lista_instrucciones = malloc(sizeof(Instrucciones));
+    if(lista_instrucciones == NULL){
         printf("No se pudo crear la lista de instrucciones en lexer\n");
         exit(1);
     }
@@ -35,8 +35,9 @@ Instrucciones *extraer_instrucciones(FILE *archivo_fuente){
         //extraemos los numeros/operandos
         extraer_operando(&instrucciones_auxiliar, linea);
 
+        printf("entrando a agregar_instruccion_lista\n");
         //agregamos la estructura a la lista
-
+        agregar_instruccion_lista(&lista_instrucciones, &instrucciones_auxiliar);
     }
 
 
@@ -89,5 +90,29 @@ void extraer_operando(Inst_aux **instrucciones_auxiliar, char *linea){
         }
         //printf("operando: %d\n", operando_aux);
         (*instrucciones_auxiliar)->operando = operando_aux;
+    }
+}
+
+void agregar_instruccion_lista(Instrucciones **lista_instrucciones, Inst_aux **instrucciones_auxiliar){
+
+    Instrucciones *nuevo_nodo = malloc(sizeof(Instrucciones));
+    if(!nuevo_nodo) return;
+
+    nuevo_nodo->siguiente = NULL;
+
+    strcpy(nuevo_nodo->nemonico, (*instrucciones_auxiliar)->nemonico);
+    nuevo_nodo->operando = (*instrucciones_auxiliar)->operando;
+
+    nuevo_nodo->siguiente = NULL;
+
+    if(*lista_instrucciones == NULL){
+        *lista_instrucciones = nuevo_nodo;
+    }else{
+        Instrucciones *actual = *lista_instrucciones;
+
+        while(actual->siguiente != NULL){
+            actual = actual->siguiente;
+        }
+        actual->siguiente = nuevo_nodo;
     }
 }
