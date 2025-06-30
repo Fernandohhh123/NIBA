@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
     }
 
 
-    Instrucciones lista_instrucciones = extraer_instrucciones(lista_archivos.archivo_fuente);
+    Instrucciones *lista_instrucciones = extraer_instrucciones(lista_archivos.archivo_fuente);
 
 
 
