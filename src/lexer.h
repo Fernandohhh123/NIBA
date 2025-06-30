@@ -1,18 +1,8 @@
 #ifndef LEXER_H
 #define LEXER_H
-
 #include "archivo.h"
 #include "lista.h"
 
-<<<<<<< HEAD
-Instrucciones *extraer_instrucciones(FILE *archivo_fuente);
-
-void extraer_nemonico(Inst_aux **instrucciones_auxiliar, char *linea);
-
-void extraer_operando(Inst_aux **instrucciones_auxiliar, char *linea);
-
-void agregar_instruccion_lista(Instrucciones **lista_instrucciones, Inst_aux **instrucciones_auxiliar);
-=======
 #define MAX_NEMONICO 8
 #define MAX_LINEA 128
 #define OPERANDO_DEFAULT 0
@@ -34,6 +24,6 @@ void extraer_nemonico(Inst_aux **instrucciones_auxiliar, char *linea);
 void extraer_operando(Inst_aux **instrucciones_auxiliar, char *linea);
 void agregar_instruccion_lista(Instrucciones **lista_instrucciones, Inst_aux **instrucciones_auxiliar);
 void agregar_instruccion_a_lista();
->>>>>>> version-funcional
+
 
 #endif
