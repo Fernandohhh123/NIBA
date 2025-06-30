@@ -16,10 +16,11 @@ Instrucciones *extraer_instrucciones(FILE *archivo_fuente){
     // "LDA, 5" -> "LDA" - "," - "espacio" - "5" - "\n" -> "LDA" "5"
 
     //creamos una lista para guardar las instrucciones
-    Instrucciones *lista_instrucciones = NULL;
+    Instrucciones *lista_instrucciones = malloc(sizeof(Instrucciones));
+
 
     //estructura auxiliar
-    Inst_aux *instrucciones_auxiliar = NULL;
+    Inst_aux *instrucciones_auxiliar = malloc(sizeof(Inst_aux));
 
     //extraemos linea por linea y la procesamos
     char linea[MAX_LINEA]; //aqio se guarda la linea comleta

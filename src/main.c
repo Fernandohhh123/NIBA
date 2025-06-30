@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "archivo.h"
 #include "cli.h"
 #include "error.h"
@@ -34,7 +35,8 @@ int main(int argc, char *argv[]){
 
 
     //estructura para guardar las instruccones
-    Instrucciones *lista_instrucciones = extraer_instrucciones(lista_archivos.archivo_fuente);
+    Instrucciones *lista_instrucciones = malloc(sizeof(Instrucciones));
+    extraer_instrucciones(lista_archivos.archivo_fuente);
 
 
 
