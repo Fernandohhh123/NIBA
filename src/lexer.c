@@ -1,120 +1,102 @@
+//en esta parte se extraeran los tokens (caracteres)
+// de todo el archivo fuente procesado en ese momento
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <string.h>
-#include "lexer.h"
 #include "info.h"
-#include "lista.h"
+#include "lexer.h"
 
-Instrucciones *extraer_instrucciones(FILE *archivo_fuente){
-    //se crea una lista elazada para guardar las instrucciones
-    //2- se lee el archivo fuente
-    //3- cada linea extraida es dividida entre instruccion y operando, en caso de tenrlo
-    // "LDA, 5" -> "LDA" - "," - "espacio" - "5" - "\n" -> "LDA" "5"
+char *leer_archivo_fuente(FILE *archivo_fuente){
 
-    Instrucciones *lista_instrucciones = malloc(sizeof(Instrucciones));
-    if(lista_instrucciones == NULL){
-        printf("No se pudo crear la lista de instrucciones en lexer\n");
+    //mueve el cursor de lectura al final del archivo para
+    // saber su tamaño
+    fseek(archivo_fuente, 0, SEEK_END);
+
+    //extrae el tamaño total del archivo
+    long longitud_archivo = ftell(archivo_fuente);
+    rewind(archivo_fuente);
+
+    //reservamos el espacio y un byte mas para indicar el final
+    char *buffer = malloc(longitud_archivo + 1);
+
+    if(!buffer){
+        fprintf(stderr,"No se pudo asignar memoria para el buffer de lexer\n");
         exit(1);
     }
 
-    Inst_aux *instrucciones_auxiliar = malloc(sizeof(Inst_aux));
-    if(instrucciones_auxiliar == NULL){
-        printf("No se pudo crear la estructura auxiliar\n");
-        exit(1);
-    }
+    //guardando los caracteres
+    size_t leidos = fread(buffer, 1,longitud_archivo, archivo_fuente);
+    buffer[leidos] = '\0';
 
-    instrucciones_auxiliar->operando = 0;
-
-    char linea[MAX_LINEA];
-    while(fgets(linea, sizeof(linea), archivo_fuente)){
-        //printf("%s", linea);
-
-        //extraemos a instruccion sin operando
-        extraer_nemonico(&instrucciones_auxiliar, linea);
-
-        //extraemos los numeros/operandos
-        extraer_operando(&instrucciones_auxiliar, linea);
-
-        printf("entrando a agregar_instruccion_lista\n");
-        //agregamos la estructura a la lista
-        agregar_instruccion_lista(&lista_instrucciones, &instrucciones_auxiliar);
-    }
-
-
-    free(instrucciones_auxiliar);
-    return lista_instrucciones;
+    return buffer;
 }
 
 
-void extraer_nemonico(Inst_aux **instrucciones_auxiliar, char *linea){
+ListaToken *extraer_token(char *codigo){
+    printf("%s", codigo);
+
+    ListaToken *lista_token = NULL;
+
+    char *buffer_token[MAX_LEXEMA];
+
     int i = 0;
-    char instruccion[MAX_NEMONICO] = {0};
-    while(linea[i] != '\0' && linea[i] != ',' && linea[i] != ' '){
-        instruccion[i] = linea[i];
-        i++;
-    }
+    while(codigo[i] != '\0'){
+        //separar palabras
+        if(isalpha(codigo[i])){
+            int j = 0;
+            while(isalpha(codigo[i])){
+                buffer_token[j] = &codigo[i];
+                j ++;
+                i ++;
+            }
+            buffer_token[j] = '\0'; //terminamos el buffer
 
-    instruccion[i] = '\0';
+            //agregamos el token a la lista enlazada
+	    
+	    printf("%s");
 
-    strcpy((*instrucciones_auxiliar)->nemonico,instruccion);
-}
+        } // letras
+        else if(isdigit(codigo[i])){
+            int j = 0;
+            while(isalpha(codigo[i])){
+                buffer_token[j] = &codigo[i];
+                j ++;
+                i ++;
+            }
+            buffer_token[j] = '\0'; //terminamos el buffer
+
+            //agregamos el token a la lista enlazada
+
+        }//digitos
+        else if(codigo[i] == ','){
+            int j = 0;
+            while(isalpha(codigo[i])){
+                buffer_token[j] = &codigo[i];
+                j ++;
+                i ++;
+            }
+            buffer_token[j] = '\0'; //terminamos el buffer
+
+            //agregamos el token a la lista enlazada
+
+
+        } // token separador
+        else if(codigo[i] == ';'){
+            while(codigo[i] != '\n'){
+                i ++;
+            }
+        } //comentarios
+
+    } // while(codigo != '\0')
+
+} //fun extraer token
 
 
 
 
-void extraer_operando(Inst_aux **instrucciones_auxiliar, char *linea){
-
-    int i = 0; //iterador que nos ayuda a procesar los caracteres de la linea del codigo
-    char c = toupper(linea[i]);
-    int operando_aux = -1;
-
-    //recorremos la cadena hasta encontrar una coma o hasta el final
-    while(linea[i] != '\0' && linea[i] != ',') i++;
-    if(linea[i] == ','){
-        i++; //saltamos la coma
-        while(linea[i] == ' ') i++; //saltamos los espacios
-
-        //se copia la cadena en mayusculas
-        c = toupper(linea[i]);
-        operando_aux = -1;
 
 
-        if(c >= '0' && c <= '9'){
-            operando_aux = c - '0';
-        } else if(c >= 'A' && c <= 'F'){
-            operando_aux = 10 + (c - 'A');
-        }else{
-            //si el operando es invalido se asignara 0 por defecto
-            //printf("operador invalido.\n");
-            (*instrucciones_auxiliar)->operando = OPERANDO_DEFAULT;
-        }
-        //printf("operando: %d\n", operando_aux);
-        (*instrucciones_auxiliar)->operando = operando_aux;
-    }
-}
 
-void agregar_instruccion_lista(Instrucciones **lista_instrucciones, Inst_aux **instrucciones_auxiliar){
-
-    Instrucciones *nuevo_nodo = malloc(sizeof(Instrucciones));
-    if(!nuevo_nodo) return;
-
-    nuevo_nodo->siguiente = NULL;
-
-    strcpy(nuevo_nodo->nemonico, (*instrucciones_auxiliar)->nemonico);
-    nuevo_nodo->operando = (*instrucciones_auxiliar)->operando;
-
-    nuevo_nodo->siguiente = NULL;
-
-    if(*lista_instrucciones == NULL){
-        *lista_instrucciones = nuevo_nodo;
-    }else{
-        Instrucciones *actual = *lista_instrucciones;
-
-        while(actual->siguiente != NULL){
-            actual = actual->siguiente;
-        }
-        actual->siguiente = nuevo_nodo;
-    }
-}

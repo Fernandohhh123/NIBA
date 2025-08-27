@@ -15,6 +15,6 @@ typedef enum{
 	JPI = 0xC0,
 	JPC = 0xD0,
 	JPZ = 0xE0
-}Basic_Instruccions;
+}Basic_Instructions;
 
 #endif

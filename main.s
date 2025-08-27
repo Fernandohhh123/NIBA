@@ -1,10 +1,5 @@
-LDA, 5
-<<<<<<< HEAD
-ADD, 2
-LDA, 7
-=======
-
+LDA 5
 ADD, 1
-
 OUTB
->>>>>>> version-funcional
+NOT
+LDA, D

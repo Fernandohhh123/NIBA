@@ -1,29 +1,47 @@
+//en esta parte se extraeran los tokens (caracteres)
+// de todo el archivo fuente procesado en ese momento
+
 #ifndef LEXER_H
 #define LEXER_H
 #include "archivo.h"
-#include "lista.h"
-
-#define MAX_NEMONICO 8
-#define MAX_LINEA 128
-#define OPERANDO_DEFAULT 0
-
-typedef struct nodo{
-    char nemonico[MAX_NEMONICO];
-    int operando;
-    int linea_original; //ubicacion en el codigo fuente
-    struct nodo *siguiente;
-}Instrucciones;
-
-typedef struct ins_aux{
-    char nemonico[MAX_NEMONICO];
-    int operando;
-}Inst_aux;
-
-Instrucciones *extraer_instrucciones(FILE *archivo_fuente);
-void extraer_nemonico(Inst_aux **instrucciones_auxiliar, char *linea);
-void extraer_operando(Inst_aux **instrucciones_auxiliar, char *linea);
-void agregar_instruccion_lista(Instrucciones **lista_instrucciones, Inst_aux **instrucciones_auxiliar);
-void agregar_instruccion_a_lista();
 
 
-#endif
+//se empieza a enumerar desde 0
+typedef enum{
+    TOKEN_DESCONOCIDO,
+    TOKEN_INSTRUCCION_CON_OPERANDO, // ->ADD<-, 5
+    TOKEN_INSTRUCCION_SIN_OPERANDO, // OUTB
+    TOKEN_OPERANDO, //ADD, ->5<-
+    TOKEN_SEPARADOR, //ADD ->,<- 5
+    TOKEN_ETIQUETA //NO DISPONIBLE AUN
+}TipoToken;
+//etiquedas aun no estan disponibles
+
+//------------------------
+//estructura para crear la lista de tokens
+#define MAX_LEXEMA 8 //8 caracteres
+typedef struct Nodo{
+    TipoToken tipo;
+    char *lexema[MAX_LEXEMA];
+    struct ListaToken *siguiente;
+}ListaToken;
+
+//--------------------------
+//lexema es el token representado en caracter
+typedef struct{
+    TipoToken tipo;
+    char lexema[MAX_LEXEMA];
+}Token;
+
+//guarda todo el codigo de el archivo fuente en un puntero char
+char *leer_archivo_fuente(FILE *archivo_fuente);
+
+
+//esta funcion escanea los caracteres y separa los tonek y crea una lista enlazada
+//retorna la lista de tokens
+ListaToken *extraer_token(char *codigo);
+
+
+
+
+#endif //LEXER_H
