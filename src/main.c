@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 
     //extraemos el codigo fuente del archivo
     char *caracteres = leer_archivo_fuente(lista_archivos.archivo_fuente);
-
+    fclose(lista_archivos.archivo_fuente);
 
     //separamos el codigo en tokens
     //creamos una lista para que recoja el principio de la lista enlazada
@@ -45,7 +45,7 @@ int main(int argc, char *argv[]){
     }
 
 
-    fclose(lista_archivos.archivo_fuente);
+    //fclose(lista_archivos.archivo_fuente);
     fclose(lista_archivos.archivo_binario);
 
     //mostrar_lista(lista_instrucciones);

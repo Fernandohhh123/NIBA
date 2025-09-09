@@ -1,5 +1,6 @@
-LDA 5
-ADD, 1
+LDA, 5
+ADD, 7
 OUTB
-NOT
-LDA, D
+LDA, 0
+NAND, 0 ;operacion logica
+OUTA

@@ -35,17 +35,22 @@ char *leer_archivo_fuente(FILE *archivo_fuente){
 }
 
 
+
 ListaToken *extraer_token(char *codigo){
-    printf("%s", codigo);
 
     ListaToken *lista_token = NULL;
-
     char *buffer_token[MAX_LEXEMA];
 
-    int i = 0;
+    //bucle para recorrer el codigo del archivo
+    size_t i = 0;
     while(codigo[i] != '\0'){
-        //separar palabras
+        //separar el codigo en tokens
+
+	//printf("%d\n", i);
+	//---------letras---------------------------
         if(isalpha(codigo[i])){
+	    printf("texto\n");
+
             int j = 0;
             while(isalpha(codigo[i])){
                 buffer_token[j] = &codigo[i];
@@ -56,12 +61,16 @@ ListaToken *extraer_token(char *codigo){
 
             //agregamos el token a la lista enlazada
 	    
-	    printf("%s");
+	    
 
         } // letras
+	
+	//---------numeros------------------------
         else if(isdigit(codigo[i])){
+	    printf("digito\n");
+
             int j = 0;
-            while(isalpha(codigo[i])){
+            while(isdigit(codigo[i])){
                 buffer_token[j] = &codigo[i];
                 j ++;
                 i ++;
@@ -71,9 +80,14 @@ ListaToken *extraer_token(char *codigo){
             //agregamos el token a la lista enlazada
 
         }//digitos
+	
+	
+	//--------separador---------------------
         else if(codigo[i] == ','){
+	    printf("separador\n");
+
             int j = 0;
-            while(isalpha(codigo[i])){
+            while(codigo[i] == ','){
                 buffer_token[j] = &codigo[i];
                 j ++;
                 i ++;
@@ -84,19 +98,31 @@ ListaToken *extraer_token(char *codigo){
 
 
         } // token separador
+	
+	//---------comentarios------------------
         else if(codigo[i] == ';'){
+	    printf("comentarios\n");
+
             while(codigo[i] != '\n'){
                 i ++;
+		if(codigo[i] == '\0') break;
             }
         } //comentarios
+
+
+	//--------cosas extra, espacio, endl, tab...---------
+	else if(codigo[i] == ' '){
+	    printf("espacio\n");	     
+	    i++;
+	}
+
+	else if(codigo[i] == '\n'){
+	    printf("endl\n");
+	    i++;
+	}
+
 
     } // while(codigo != '\0')
 
 } //fun extraer token
-
-
-
-
-
-
 
