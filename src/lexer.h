@@ -15,16 +15,20 @@ typedef enum{
     TOKEN_SEPARADOR, //ADD ->,<- 5
     TOKEN_ETIQUETA //NO DISPONIBLE AUN
 }TipoToken;
-//etiquedas aun no estan disponibles
+//etiquetas aun no estan disponibles
+
+
 
 //------------------------
 //estructura para crear la lista de tokens
 #define MAX_LEXEMA 8 //8 caracteres
 typedef struct Nodo{
     TipoToken tipo;
-    char *lexema[MAX_LEXEMA];
+    char lexema[MAX_LEXEMA];
     struct ListaToken *siguiente;
 }ListaToken;
+
+
 
 //--------------------------
 //lexema es el token representado en caracter
@@ -33,14 +37,16 @@ typedef struct{
     char lexema[MAX_LEXEMA];
 }Token;
 
+
+
 //guarda todo el codigo de el archivo fuente en un puntero char
 char *leer_archivo_fuente(FILE *archivo_fuente);
+
 
 
 //esta funcion escanea los caracteres y separa los tonek y crea una lista enlazada
 //retorna la lista de tokens
 ListaToken *extraer_token(char *codigo);
-
 
 
 
