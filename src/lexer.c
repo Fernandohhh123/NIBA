@@ -78,8 +78,11 @@ ListaToken *extraer_token(char *codigo){
 			buffer_token[j] = '\0'; //terminamos el buffer
 
 			//--agregamos el token a la lista enlazada--
-			strcpy(token_extraido.lexema, buffer_token);
-			lista_token = insertar_token(lista_token, token_extraido);
+			strcpy(token_extraido.lexema, buffer_token); //se copia el token extraido
+			
+			token_extraido.tipo = identificar_token(buffer_token);
+			lista_token = insertar_token(lista_token, token_extraido);  //se agrega a la lista
+			
 
 	    }//letras
 
@@ -103,6 +106,8 @@ ListaToken *extraer_token(char *codigo){
 	            	}
 			buffer_token[j] = '\0'; //terminamos el buffer
 			strcpy(token_extraido.lexema, buffer_token);
+
+			token_extraido.tipo = identificar_token(buffer_token);
 
 			//agregamos el token a la lista enlazada
 			lista_token = insertar_token(lista_token, token_extraido);
@@ -130,6 +135,8 @@ ListaToken *extraer_token(char *codigo){
 	        buffer_token[j] = '\0'; //terminamos el buffer
 			strcpy(token_extraido.lexema, buffer_token);
 
+			token_extraido.tipo = identificar_token(buffer_token);
+
 			//agregamos el token a la lista enlazada
 			lista_token = insertar_token(lista_token, token_extraido);
 
@@ -138,6 +145,8 @@ ListaToken *extraer_token(char *codigo){
         	} // token separador
 
 
+
+			//##### cosas a ignorar ################################
 
 		//---------comentarios----------------------------
 		// -texto
@@ -214,7 +223,8 @@ void mostrar_tokens(ListaToken *lista){
 	actual = lista;
 
 	while(actual != NULL){
-		printf("%s\n", actual->lexema);
+		printf("%s ", actual->lexema);
+		printf("%d\n", actual->tipo);
 		actual = actual->siguiente;
 	}
 }
@@ -227,5 +237,88 @@ void liberar_lista_tokens(ListaToken *lista){
 		siguiente_nodo = actual->siguiente;
 		free(actual);
 		actual = siguiente_nodo;
+	}
+}
+
+TipoToken identificar_token(char *buffer){
+	
+
+	for (int i = 0; buffer[i]; i++){
+		buffer[i] = toupper(buffer[i]);
+	}
+
+	if(strcmp(buffer, "NOT") == 0){
+		return TOKEN_NO_OPERATION;
+	}
+	else if(strcmp(buffer, "NAND") == 0){
+		return TOKEN_INSTRUCCION_CON_OPERANDO;
+	}
+	else if(strcmp(buffer, "ADD") == 0){
+		return TOKEN_INSTRUCCION_CON_OPERANDO;
+	}
+	else if(strcmp(buffer, "LDA") == 0){
+		return TOKEN_INSTRUCCION_CON_OPERANDO;
+	}
+	else if(strcmp(buffer, "OUTA") == 0){
+		return TOKEN_INSTRUCCION_SIN_OPERANDO;
+	}
+	else if(strcmp(buffer, "OUTB") == 0){
+		return TOKEN_INSTRUCCION_SIN_OPERANDO;
+	}
+	else if(strcmp(buffer, "INA") == 0){
+		return TOKEN_INSTRUCCION_SIN_OPERANDO;
+	}
+	else if(strcmp(buffer, "RD") == 0){
+		return TOKEN_INSTRUCCION_SIN_OPERANDO;
+	}
+	else if(strcmp(buffer, "RA") == 0){
+		return TOKEN_INSTRUCCION_SIN_OPERANDO;
+	}
+	else if(strcmp(buffer, "LDRA") == 0){
+		return TOKEN_INSTRUCCION_SIN_OPERANDO;
+	}
+	else if(strcmp(buffer, "JPI") == 0){
+		return TOKEN_INSTRUCCION_CON_OPERANDO;
+	}
+	else if(strcmp(buffer, "JPC") == 0){
+		return TOKEN_INSTRUCCION_CON_OPERANDO;
+	}
+	else if(strcmp(buffer, "JPZ") == 0){
+		return TOKEN_INSTRUCCION_CON_OPERANDO;
+	}
+	else if(strcmp(buffer, ",") == 0){
+		return TOKEN_SEPARADOR;
+	}
+	else if(es_num_entero(buffer) == 0){
+		if(validar_numero(buffer) == 0){
+			return TOKEN_OPERANDO;
+		} else {
+			return TOKEN_DESCONOCIDO;
+		}
+		
+	}
+	else{
+		return TOKEN_DESCONOCIDO;
+	}
+	
+}
+
+int es_num_entero(char *str){
+	int i = 0;
+	for(i; str[i]; i++){
+		if(!isdigit(str[i])){
+			return i;
+		}
+	}
+	return i == 0;
+}
+
+int validar_numero(char *str){
+	int numero = atoi(str);
+
+	if((numero >= 0) && (numero <= 15)){
+		return 0;
+	} else {
+		return 1;
 	}
 }
