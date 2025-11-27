@@ -35,6 +35,7 @@ int main(int argc, char *argv[]){
     //separamos el codigo en tokens
     //creamos una lista para que recoja el principio de la lista enlazada
     ListaToken *listado_tokens = extraer_token(caracteres);
+    mostrar_tokens(listado_tokens);
 
 
     //una vez leido y validado el codigo fuente
@@ -44,6 +45,8 @@ int main(int argc, char *argv[]){
         return code_error(archivo_binario_no_creado, cli_arg);
     }
 
+    //liberamos la memoria que reservamos para los tokens
+    liberar_lista_tokens(listado_tokens);
 
     //fclose(lista_archivos.archivo_fuente);
     fclose(lista_archivos.archivo_binario);

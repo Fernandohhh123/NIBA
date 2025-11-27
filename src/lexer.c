@@ -40,7 +40,6 @@ char *leer_archivo_fuente(FILE *archivo_fuente){
 
 ListaToken *extraer_token(char *codigo){
 
-
 	ListaToken *lista_token = NULL; //lista enlazada para encadenar tokens
 	char buffer_token[MAX_LEXEMA]; //buffer para ir guardando los tokens extridos
 	Token token_extraido = {TOKEN_DESCONOCIDO," "}; //estructura para facilitar la creacion de la lista enlazada
@@ -52,7 +51,7 @@ ListaToken *extraer_token(char *codigo){
 	//printf("%s\n", codigo);
 
 	while(codigo[i] != '\0'){
-	        //separar el codigo en tokens
+		//separar el codigo en tokens
 
 
 
@@ -66,26 +65,23 @@ ListaToken *extraer_token(char *codigo){
 		// -separador
 		// -comentarios
 		// -extra
-	        if(isalpha(codigo[i])){
+	    if(isalpha(codigo[i])){
 
 			//printf("texto: ");
 
 			int j = 0;
-        		while(isalpha(codigo[i])){
-
+    		while(isalpha(codigo[i])){
 				buffer_token[j] = codigo[i];
 				j ++;
 				i ++;
 			}
-		buffer_token[j] = '\0'; //terminamos el buffer
+			buffer_token[j] = '\0'; //terminamos el buffer
 
-		strcpy(token_extraido.lexema, buffer_token);
+			//--agregamos el token a la lista enlazada--
+			strcpy(token_extraido.lexema, buffer_token);
+			lista_token = insertar_token(lista_token, token_extraido);
 
-		//agregamos el token a la lista enlazada
-
-		printf("%s\n", token_extraido.lexema);
-
-	        }//letras
+	    }//letras
 
 
 
@@ -106,11 +102,10 @@ ListaToken *extraer_token(char *codigo){
 	                	i ++;
 	            	}
 			buffer_token[j] = '\0'; //terminamos el buffer
-
 			strcpy(token_extraido.lexema, buffer_token);
-			printf("%s\n", token_extraido.lexema);
 
 			//agregamos el token a la lista enlazada
+			lista_token = insertar_token(lista_token, token_extraido);
 
 		}//digitos
 
@@ -132,11 +127,12 @@ ListaToken *extraer_token(char *codigo){
 	                j ++;
 	                i ++;
 	            }
-	            buffer_token[j] = '\0'; //terminamos el buffer
+	        buffer_token[j] = '\0'; //terminamos el buffer
+			strcpy(token_extraido.lexema, buffer_token);
 
 			//agregamos el token a la lista enlazada
+			lista_token = insertar_token(lista_token, token_extraido);
 
-			printf("%s\n", &buffer_token);
 
 
         	} // token separador
@@ -150,13 +146,13 @@ ListaToken *extraer_token(char *codigo){
 		// >comentarios
 		// -extra
 
-	        else if(codigo[i] == ';'){
-			printf("comentarios\n");
+	    else if(codigo[i] == ';'){
+			//printf("comentarios\n");
 
-        		while(codigo[i] != '\n'){
-		                i ++;
+        	while(codigo[i] != '\n'){
+			    i ++;
 				if(codigo[i] == '\0') break;
-	        	}
+        	}
 
 		} //comentarios
 
@@ -164,17 +160,72 @@ ListaToken *extraer_token(char *codigo){
 
 		//--------cosas extra, espacio, endl, tab...---------
 		else if(codigo[i] == ' '){
-			printf("espacio\n");
-		    	i++;
+			//printf("espacio\n");
+		    i++;
 		}
 
 		else if(codigo[i] == '\n'){
-			printf("endl\n");
+			//printf("endl\n");
+			i++;
+		}
+		else {
 			i++;
 		}
 
-
 	} // while(codigo != '\0')
+
+	//mostrar_tokens(lista_token);
+
+	return lista_token;
 
 } //fun extraer token
 
+
+//funcion para insertar tokens en la lista enlazada
+ListaToken *insertar_token(ListaToken *l_token, Token token){
+	ListaToken *nuevo_token = (ListaToken*) malloc(sizeof(ListaToken)); //creamos un nuevo nodo
+	ListaToken *aux;
+
+	aux = NULL;
+
+	strcpy(nuevo_token->lexema, token.lexema); //le asignamos el dato al nuevo nodo
+	nuevo_token->tipo = token.tipo;
+
+	/**/
+
+	nuevo_token->siguiente = NULL;
+
+	if(l_token == NULL){
+		l_token = nuevo_token;
+	} else {
+		aux = l_token;
+		while (aux->siguiente != NULL){
+			aux = aux->siguiente;
+		}
+		aux->siguiente = nuevo_token;
+	}
+	
+	return l_token;
+}
+
+
+void mostrar_tokens(ListaToken *lista){
+	ListaToken *actual = (ListaToken*) malloc(sizeof(ListaToken));
+	actual = lista;
+
+	while(actual != NULL){
+		printf("%s\n", actual->lexema);
+		actual = actual->siguiente;
+	}
+}
+
+void liberar_lista_tokens(ListaToken *lista){
+	ListaToken *actual = lista;
+	ListaToken *siguiente_nodo;
+
+	while(actual != NULL){
+		siguiente_nodo = actual->siguiente;
+		free(actual);
+		actual = siguiente_nodo;
+	}
+}

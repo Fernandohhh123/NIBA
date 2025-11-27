@@ -2,4 +2,4 @@ echo "compilando"
 make
 
 echo "ejecutando"
-./programa main.s -o main
+./programa example.s -o example.bin

@@ -1,1 +1,1 @@
-./programa main.s -o main
+./niba example.s -o example.bin

@@ -1,7 +1,7 @@
 
 programa: src/*.c src/*.h
-	gcc src/*.c src/*.h -o programa
+	gcc src/*.c src/*.h -o niba
 
 .PHONY : clean
 clean :
-	-rm programa
+	-rm niba

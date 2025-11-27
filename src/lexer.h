@@ -20,12 +20,13 @@ typedef enum{
 
 
 //------------------------
+#define MAX_LEXEMA 255 //255 caracteres
+
 //estructura para crear la lista de tokens
-#define MAX_LEXEMA 8 //8 caracteres
 typedef struct Nodo{
     TipoToken tipo;
     char lexema[MAX_LEXEMA];
-    struct ListaToken *siguiente;
+    struct Nodo *siguiente;
 }ListaToken;
 
 
@@ -48,6 +49,14 @@ char *leer_archivo_fuente(FILE *archivo_fuente);
 //retorna la lista de tokens
 ListaToken *extraer_token(char *codigo);
 
+
+//funcion para insertar tokens en la lista enlazasa
+ListaToken *insertar_token(ListaToken *, Token);
+
+//funcion para mostrar los tokens, se usa como dpurador
+void mostrar_tokens(ListaToken *lista);
+
+void liberar_lista_tokens(ListaToken *lista);
 
 
 #endif //LEXER_H
