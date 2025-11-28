@@ -50,14 +50,10 @@ ListaToken *extraer_token(char *codigo){
 	//imprimir el codigo completo
 	//printf("%s\n", codigo);
 
+	int numero_linea = 1; //recoge el numero de la linea de la instruccion
+
 	while(codigo[i] != '\0'){
 		//separar el codigo en tokens
-
-
-
-		//imprimir el ciclo
-		//printf("ciclo: %d\n", i);
-
 
 		//---------texto---------------------------
 		// >texto
@@ -79,6 +75,7 @@ ListaToken *extraer_token(char *codigo){
 
 			//--agregamos el token a la lista enlazada--
 			strcpy(token_extraido.lexema, buffer_token); //se copia el token extraido
+			token_extraido.num_linea = numero_linea;
 			
 			token_extraido.tipo = identificar_token(buffer_token);
 			lista_token = insertar_token(lista_token, token_extraido);  //se agrega a la lista
@@ -106,6 +103,7 @@ ListaToken *extraer_token(char *codigo){
 	            	}
 			buffer_token[j] = '\0'; //terminamos el buffer
 			strcpy(token_extraido.lexema, buffer_token);
+			token_extraido.num_linea = numero_linea;
 
 			token_extraido.tipo = identificar_token(buffer_token);
 
@@ -134,6 +132,7 @@ ListaToken *extraer_token(char *codigo){
 	            }
 	        buffer_token[j] = '\0'; //terminamos el buffer
 			strcpy(token_extraido.lexema, buffer_token);
+			token_extraido.num_linea = numero_linea;
 
 			token_extraido.tipo = identificar_token(buffer_token);
 
@@ -176,6 +175,7 @@ ListaToken *extraer_token(char *codigo){
 		else if(codigo[i] == '\n'){
 			//printf("endl\n");
 			i++;
+			numero_linea++;
 		}
 		else {
 			i++;
@@ -198,6 +198,7 @@ ListaToken *insertar_token(ListaToken *l_token, Token token){
 	aux = NULL;
 
 	strcpy(nuevo_token->lexema, token.lexema); //le asignamos el dato al nuevo nodo
+	nuevo_token->num_linea = token.num_linea;
 	nuevo_token->tipo = token.tipo;
 
 	/**/
@@ -222,9 +223,10 @@ void mostrar_tokens(ListaToken *lista){
 	ListaToken *actual = (ListaToken*) malloc(sizeof(ListaToken));
 	actual = lista;
 
+	int linea = actual->num_linea;
+
 	while(actual != NULL){
-		printf("%s ", actual->lexema);
-		printf("%d\n", actual->tipo);
+		printf("%s", actual->lexema);
 		actual = actual->siguiente;
 	}
 }

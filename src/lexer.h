@@ -27,6 +27,7 @@ typedef enum {
 typedef struct Nodo{
     TipoToken tipo;
     char lexema[MAX_LEXEMA];
+    int num_linea;
     struct Nodo *siguiente;
 }ListaToken;
 
@@ -37,6 +38,7 @@ typedef struct Nodo{
 typedef struct {
     TipoToken tipo;
     char lexema[MAX_LEXEMA];
+    int num_linea;
 }Token;
 
 
