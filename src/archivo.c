@@ -4,8 +4,6 @@
 #include "cli.h"
 #include "info.h"
 
-
-
 FILE *buscarArchivo(CLI_Arguments cli_arg){
     FILE *archivo = fopen(cli_arg.archivo_fuente, "r");
     if(!archivo){
@@ -24,6 +22,6 @@ FILE *crear_archivo_binario(CLI_Arguments cli_arg){
     }
 }
 
-FILE *generar_binario(Archivos lista_archivos){
-
+void escribir_binario(FILE *archivo_binario, Binary_code *b_code){
+    fwrite(b_code->data, 1, b_code->use_space, archivo_binario);
 }

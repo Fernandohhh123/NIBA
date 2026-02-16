@@ -3,7 +3,8 @@
 
 #ifndef LEXER_H
 #define LEXER_H
-#include "archivo.h"
+#include <stdio.h>
+//#include "archivo.h"
 
 
 //se empieza a enumerar desde 0

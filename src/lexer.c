@@ -187,7 +187,7 @@ ListaToken *extraer_token(char *codigo){
 
 	return lista_token;
 
-} //fun extraer token
+} //fun extraer token-------------------------------------
 
 
 //funcion para insertar tokens en la lista enlazada
@@ -226,7 +226,6 @@ void mostrar_tokens(ListaToken *lista){
 	int linea = actual->num_linea;
 
 	while(actual != NULL){
-		printf("%s", actual->lexema);
 		actual = actual->siguiente;
 	}
 }
@@ -243,7 +242,6 @@ void liberar_lista_tokens(ListaToken *lista){
 }
 
 TipoToken identificar_token(char *buffer){
-	
 
 	for (int i = 0; buffer[i]; i++){
 		buffer[i] = toupper(buffer[i]);
