@@ -1,36 +1,14 @@
-nada por ahora
-
 Ensamblador para un procesador de 4 bits de arquitectura personalizada
 
 ________________________________________________________________
-COMANDOS PARA MANEJAR EL ENSAMBLDOR:
 
-Para ejecutar el programa se debe de usar "./" para ejecutar el programa en linux.
-ejemplo: ./ensamblador
-debe de estar en la carpeta la cual esta ubicado el ejecutable o el binario ya compilado
-tambien el archivo a ensamblar debe de estar en el mismo lugar que el ejecutable.
-Todo es de manera local
+COMO USAR:
 
-si decide poner el programa en las variables de entorno para ejecutarlo en cualquier lado
-no sera necesario agregar "./"
+niba <nombre_archivo_fuente> [flags]
 
-FORMATO PARA COMPILAR UN ARCHIVO FUENTE:
+ARGUMENTOS:
 
-./ensamblador nombre_archivo_fuente -o archivo_binario.bin
-    Ensambla el archivo con dogico fuente y crea un binario con "-o"
-    
-./ensamblador nombre_archivo_fuente
-    En caso de no especificar el nombre del archivo de salida o archivo binario
-    se creara con el nombre de "a.bin" por defecto
-
-./ensamblador --version
-    especifica la version del programa
-    
-./ensamblador 
-
-
-
-
+	-o [archivo]	- Especifica el nombre del archivo de salida
 
 
 DESCRIPCION DEL ENSAMBLDOR
