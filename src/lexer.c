@@ -76,10 +76,11 @@ ListaToken *extraer_token(char *codigo){
 			//--agregamos el token a la lista enlazada--
 			strcpy(token_extraido.lexema, buffer_token); //se copia el token extraido
 			token_extraido.num_linea = numero_linea;
-			
+
+
 			token_extraido.tipo = identificar_token(buffer_token);
 			lista_token = insertar_token(lista_token, token_extraido);  //se agrega a la lista
-			
+
 
 	    }//letras
 
@@ -96,11 +97,13 @@ ListaToken *extraer_token(char *codigo){
 			//printf("digito: ");
 
 			int j = 0;
-	            	while(isdigit(codigo[i])){
-	                	buffer_token[j] = codigo[i];
-	                	j ++;
+
+				while(isdigit(codigo[i])){
+					buffer_token[j] = codigo[i];
+						j ++;
 	                	i ++;
-	            	}
+				}
+
 			buffer_token[j] = '\0'; //terminamos el buffer
 			strcpy(token_extraido.lexema, buffer_token);
 			token_extraido.num_linea = numero_linea;
