@@ -9,13 +9,13 @@ niba <nombre_archivo_fuente> [flags]
 ARGUMENTOS:
 
 	-o [archivo]	- Especifica el nombre del archivo de salida
+	-v				- Muestra la version del programa
 
 
 DESCRIPCION DEL ENSAMBLDOR
-______________________________________________________________________________________--
+______________________________________________________________________________________
 El Ensamblador al igual que el procesador es muy basico, los programas
-se ejecutan directmante en el hardware, sin una capa como un sistema operativo,
-BIOS, UEFI.
+se ejecutan directo en la cpu
 
 Esta primera version 0.0.1
 es una version de prueba que traduce directamente las instrucciones a binario.
@@ -49,6 +49,3 @@ los numeros con notacion hexadecimal "0x00" es la direccion dentro de la rom
 mientras que los numero con la notacion "00h" son los datos almacenados.
 no tiene diferencia alguna este formato, solo es para diferenciar
 visualmente la direccion de los datos
-
-
-
